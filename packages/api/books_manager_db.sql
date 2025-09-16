@@ -1,0 +1,44 @@
+CREATE DATABASE `books_manager_db`;
+USE `books_manager_db`;
+
+CREATE TABLE `book` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `book_id` VARCHAR(64) NOT NULL UNIQUE,
+  `title` VARCHAR(255) NOT NULL,
+  `publication_date` DATE NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE `author` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `author_id` VARCHAR(64) NOT NULL UNIQUE,
+  `name` VARCHAR(255) NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE `genre` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `genre_id` VARCHAR(64) NOT NULL UNIQUE,
+  `name` VARCHAR(128) NOT NULL,
+  `color_hex` CHAR(7) NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE `book_author` (
+  `book_id` INT NOT NULL,
+  `author_id` INT NOT NULL,
+  PRIMARY KEY (`book_id`, `author_id`),
+  FOREIGN KEY (`book_id`) REFERENCES `book`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`author_id`) REFERENCES `author`(`id`) ON DELETE CASCADE
+);
+
+CREATE TABLE `book_genre` (
+  `book_id` INT NOT NULL,
+  `genre_id` INT NOT NULL,
+  PRIMARY KEY (`book_id`, `genre_id`),
+  FOREIGN KEY (`book_id`) REFERENCES `book`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`genre_id`) REFERENCES `genre`(`id`) ON DELETE CASCADE
+);

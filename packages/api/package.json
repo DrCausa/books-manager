@@ -1,0 +1,15 @@
+{
+  "name": "api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "install": "composer install",
+    "dev": "composer install && php -S localhost:8000 -t public",
+    "serve": "php -S localhost:8000 -t public",
+    "build": "composer install --no-dev --optimize-autoloader",
+    "clean": "rimraf vendor"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1"
+  }
+}

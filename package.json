@@ -1,0 +1,25 @@
+{
+  "name": "books-manager",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "install:all": "pnpm install --recursive && pnpm --filter ./packages/api run install",
+    "dev": "pnpm --parallel --filter ./packages/* run dev",
+    "dev:app": "pnpm --filter ./packages/app run dev",
+    "dev:api": "pnpm --filter ./packages/api run dev",
+    "build": "pnpm --recursive run build",
+    "build:app": "pnpm --filter ./packages/app run build",
+    "build:api": "pnpm --filter ./packages/api run build",
+    "preview": "pnpm --filter ./packages/app run preview",
+    "api:serve": "pnpm --filter ./packages/api run serve",
+    "lint": "pnpm --recursive run lint",
+    "clean": "pnpm --recursive run clean || true"
+  },
+  "devDependencies": {
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}
