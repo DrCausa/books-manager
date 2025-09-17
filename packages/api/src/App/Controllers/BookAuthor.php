@@ -17,8 +17,8 @@ class BookAuthor
   {
     $body = $req->getParsedBody();
 
-    $book_id = $req->getAttribute(BookAuthorTable::COL_BOOK_ID);
-    $author_id = $req->getAttribute(BookAuthorTable::COL_AUTHOR_ID);
+    $book_id = $body[BookAuthorTable::COL_BOOK_ID];
+    $author_id = $body[BookAuthorTable::COL_AUTHOR_ID];
 
     $id = $this->bookAuthorRepo->attach($book_id, $author_id);
 

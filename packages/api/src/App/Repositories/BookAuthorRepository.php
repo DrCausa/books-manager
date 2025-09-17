@@ -13,7 +13,7 @@ class BookAuthorRepository
 {
   public function __construct(private Database $db) {}
 
-  public function attach(int $bookId, int $authorId): void
+  public function attach(int $bookId, int $authorId): string
   {
     $pdo = $this->db->getConnection();
     $stmt = $pdo->prepare(BookAuthorSchema::SQL_INSERT);
@@ -31,6 +31,7 @@ class BookAuthorRepository
     );
 
     $stmt->execute();
+    return $pdo->lastInsertId();
   }
 
   public function detach(int $bookId, int $authorId): void

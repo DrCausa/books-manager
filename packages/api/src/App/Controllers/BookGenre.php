@@ -17,8 +17,8 @@ class BookGenre
   {
     $body = $req->getParsedBody();
 
-    $book_id = $req->getAttribute(BookGenreTable::COL_BOOK_ID);
-    $genre_id = $req->getAttribute(BookGenreTable::COL_GENRE_ID);
+    $book_id = $body[BookGenreTable::COL_BOOK_ID];
+    $genre_id = $body[BookGenreTable::COL_GENRE_ID];
 
     $id = $this->bookGenreRepo->attach($book_id, $genre_id);
 

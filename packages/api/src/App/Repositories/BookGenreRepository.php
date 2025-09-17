@@ -13,21 +13,42 @@ class BookGenreRepository
 {
   public function __construct(private Database $db) {}
 
-  public function attach(int $bookId, int $genreId): void
+  public function attach(int $bookId, int $genreId): string
   {
     $pdo = $this->db->getConnection();
     $stmt = $pdo->prepare(BookGenreSchema::SQL_INSERT);
-    $stmt->bindValue(':' . BookGenreTable::COL_BOOK_ID, $bookId, PDO::PARAM_INT);
-    $stmt->bindValue(':' . BookGenreTable::COL_GENRE_ID, $genreId, PDO::PARAM_INT);
+
+    $stmt->bindValue(
+      ':' . BookGenreTable::COL_BOOK_ID,
+      $bookId,
+      PDO::PARAM_INT
+    );
+    $stmt->bindValue(
+      ':' . BookGenreTable::COL_GENRE_ID,
+      $genreId,
+      PDO::PARAM_INT
+    );
+
     $stmt->execute();
+    return $pdo->lastInsertId();
   }
 
   public function detach(int $bookId, int $genreId): void
   {
     $pdo = $this->db->getConnection();
     $stmt = $pdo->prepare(BookGenreSchema::SQL_DELETE);
-    $stmt->bindValue(':' . BookGenreTable::COL_BOOK_ID, $bookId, PDO::PARAM_INT);
-    $stmt->bindValue(':' . BookGenreTable::COL_GENRE_ID, $genreId, PDO::PARAM_INT);
+
+    $stmt->bindValue(
+      ':' . BookGenreTable::COL_BOOK_ID,
+      $bookId,
+      PDO::PARAM_INT
+    );
+    $stmt->bindValue(
+      ':' . BookGenreTable::COL_GENRE_ID,
+      $genreId,
+      PDO::PARAM_INT
+    );
+
     $stmt->execute();
   }
 
