@@ -16,3 +16,7 @@ export const addBookGenre = async (
   });
   return data;
 };
+
+export const deleteBookGenres = async (book_id: string): Promise<void> => {
+  await api.delete(`/books/${book_id}/genres`);
+};

@@ -1,8 +1,16 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getBookById, updateBook } from "@/services/api/books";
-import { addBookAuthor, getBookAuthors } from "@/services/api/bookAuthors";
-import { addBookGenre, getBookGenres } from "@/services/api/bookGenres";
+import {
+  addBookAuthor,
+  deleteBookAuthors,
+  getBookAuthors,
+} from "@/services/api/bookAuthors";
+import {
+  addBookGenre,
+  deleteBookGenres,
+  getBookGenres,
+} from "@/services/api/bookGenres";
 import { getAuthorById, getAuthors } from "@/services/api/author";
 import { getGenreById, getGenres } from "@/services/api/genre";
 import type { Author, Genre } from "@/services/api/types";
@@ -66,13 +74,14 @@ const EditBookPage = () => {
     }
 
     try {
-      console.log(id);
-
       if (id) {
         await updateBook(id, {
           title,
           publication_date: new Date().toISOString(),
         });
+
+        await deleteBookAuthors(id);
+        await deleteBookGenres(id);
 
         await Promise.all(authorIds.map((aId) => addBookAuthor(id, aId)));
         await Promise.all(genreIds.map((gId) => addBookGenre(id, gId)));

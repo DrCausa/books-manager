@@ -18,3 +18,7 @@ export const addBookAuthor = async (
   });
   return data;
 };
+
+export const deleteBookAuthors = async (book_id: string): Promise<void> => {
+  await api.delete(`/books/${book_id}/authors`);
+};
