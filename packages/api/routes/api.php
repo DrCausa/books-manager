@@ -8,6 +8,8 @@ use App\Database\Tables\BookTable;
 use App\Middleware\General\BookLoader;
 use App\Middleware\Validation\BookValidator;
 use App\Controllers\Author;
+use App\Controllers\BookAuthor;
+use App\Controllers\BookGenre;
 use App\Database\Tables\AuthorTable;
 use App\Middleware\General\AuthorLoader;
 use App\Middleware\Validation\AuthorValidator;
@@ -29,6 +31,9 @@ return function (RouteCollectorProxy $group) {
 
       $group->get('/authors', [Book::class, 'authors']);
       $group->get('/genres', [Book::class, 'genres']);
+
+      $group->post('/authors', [BookAuthor::class, 'create']);
+      $group->post('/genres', [BookGenre::class, 'create']);
     })->add(BookLoader::class);
 
     $group->group('/{' . BookTable::COL_BOOK_ID . ':[a-zA-Z0-9_-]+}', function (RouteCollectorProxy $group) {
@@ -38,6 +43,9 @@ return function (RouteCollectorProxy $group) {
 
       $group->get('/authors', [Book::class, 'authors']);
       $group->get('/genres', [Book::class, 'genres']);
+
+      $group->post('/authors', [BookAuthor::class, 'create']);
+      $group->post('/genres', [BookGenre::class, 'create']);
     })->add(BookLoader::class);
   });
 
