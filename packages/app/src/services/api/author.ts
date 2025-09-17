@@ -6,7 +6,7 @@ export const getAuthors = async (): Promise<Author[]> => {
   return data;
 };
 
-export const getAuthorById = async (id: string): Promise<Author[]> => {
+export const getAuthorById = async (id: string): Promise<Author> => {
   const { data } = await api.get(`/authors/${id}`);
   return data;
 };

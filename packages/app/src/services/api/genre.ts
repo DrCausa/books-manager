@@ -6,7 +6,7 @@ export const getGenres = async (): Promise<Genre[]> => {
   return data;
 };
 
-export const getGenreById = async (id: string): Promise<Genre[]> => {
+export const getGenreById = async (id: string): Promise<Genre> => {
   const { data } = await api.get(`/genres/${id}`);
   return data;
 };

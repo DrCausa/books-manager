@@ -14,3 +14,13 @@ export interface Genre {
   name: string;
   color_hex: string;
 }
+
+export interface BookAuthor {
+  book_id: string;
+  author_id: string;
+}
+
+export interface BookGenre {
+  book_id: string;
+  genre_id: string;
+}
