@@ -1,24 +1,58 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createBook } from "@/services/api/books";
+import { addBookAuthor } from "@/services/api/bookAuthors";
+import { addBookGenre } from "@/services/api/bookGenres";
+import { getAuthors } from "@/services/api/author";
+import { getGenres } from "@/services/api/genre";
+import type { Author, Genre } from "@/services/api/types";
 
 const AddBookPage = () => {
   const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [genre, setGenre] = useState("");
+  const [authorId, setAuthorId] = useState("");
+  const [genreId, setGenreId] = useState("");
+  const [authors, setAuthors] = useState<Author[]>([]);
+  const [genres, setGenres] = useState<Genre[]>([]);
 
-  // Datos simulados
-  const authors = ["Gabriel García Márquez", "George Orwell", "Isabel Allende"];
-  const genres = ["Realismo mágico", "Ciencia ficción", "Novela"];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const authorsData = await getAuthors();
+        setAuthors(authorsData);
 
-  const handleSubmit = (e: React.FormEvent) => {
+        const genresData = await getGenres();
+        setGenres(genresData);
+      } catch (error) {
+        console.error("Error al cargar autores o géneros", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!author || !genre) {
-      alert("Por favor selecciona un autor y un género.");
+    if (!title || !authorId || !genreId) {
+      alert("Por favor completa todos los campos.");
       return;
     }
-    alert(`Libro añadido: ${title} de ${author} (${genre})`);
-    setTitle("");
-    setAuthor("");
-    setGenre("");
+
+    try {
+      const newBookArray = await createBook({
+        title,
+        publication_date: new Date().toISOString(),
+      });
+      const bookId = newBookArray[0].id;
+
+      await addBookAuthor(bookId, authorId);
+      await addBookGenre(bookId, genreId);
+
+      setTitle("");
+      setAuthorId("");
+      setGenreId("");
+      alert("Libro creado exitosamente");
+    } catch (error) {
+      console.error(error);
+      alert("Error al crear el libro");
+    }
   };
 
   return (
@@ -29,7 +63,6 @@ const AddBookPage = () => {
         </h1>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {/* Título */}
           <input
             type="text"
             placeholder="Título del libro"
@@ -39,37 +72,34 @@ const AddBookPage = () => {
             required
           />
 
-          {/* Autor */}
           <select
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
+            value={authorId}
+            onChange={(e) => setAuthorId(e.target.value)}
             className="border rounded p-2"
             required
           >
-            <option value="">Autor...</option>
-            {authors.map((a, index) => (
-              <option key={index} value={a}>
-                {a}
+            <option value="">Selecciona un autor...</option>
+            {authors.map((a) => (
+              <option key={a.id} value={a.id}>
+                {a.name}
               </option>
             ))}
           </select>
 
-          {/* Género */}
           <select
-            value={genre}
-            onChange={(e) => setGenre(e.target.value)}
+            value={genreId}
+            onChange={(e) => setGenreId(e.target.value)}
             className="border rounded p-2"
             required
           >
-            <option value="">Género...</option>
-            {genres.map((g, index) => (
-              <option key={index} value={g}>
-                {g}
+            <option value="">Selecciona un género...</option>
+            {genres.map((g) => (
+              <option key={g.id} value={g.id}>
+                {g.name}
               </option>
             ))}
           </select>
 
-          {/* Botón */}
           <button
             type="submit"
             className="bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition"
@@ -83,6 +113,3 @@ const AddBookPage = () => {
 };
 
 export default AddBookPage;
-
-
-
