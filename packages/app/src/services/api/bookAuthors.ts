@@ -12,6 +12,9 @@ export const addBookAuthor = async (
   book_id: string,
   author_id: string
 ): Promise<BookAuthor> => {
-  const { data } = await api.post("/book_authors", { book_id, author_id });
+  const { data } = await api.post(`/books/${book_id}/authors`, {
+    book_id,
+    author_id,
+  });
   return data;
 };
