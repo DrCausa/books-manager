@@ -27,6 +27,7 @@ return function (RouteCollectorProxy $group) {
     $group->group('/{' . BookTable::COL_ID . ':[0-9]+}', function (RouteCollectorProxy $group) {
       $group->get('', [Book::class, 'show']);
       $group->patch('', [Book::class, 'update']);
+      $group->put('', [Book::class, 'update']);
       $group->delete('', [Book::class, 'delete']);
 
       $group->get('/authors', [Book::class, 'authors']);
@@ -39,6 +40,7 @@ return function (RouteCollectorProxy $group) {
     $group->group('/{' . BookTable::COL_BOOK_ID . ':[a-zA-Z0-9_-]+}', function (RouteCollectorProxy $group) {
       $group->get('', [Book::class, 'showByBookId']);
       $group->patch('', [Book::class, 'updateByBookId']);
+      $group->put('', [Book::class, 'updateByBookId']);
       $group->delete('', [Book::class, 'deleteByBookId']);
 
       $group->get('/authors', [Book::class, 'authors']);
@@ -57,6 +59,7 @@ return function (RouteCollectorProxy $group) {
     $group->group('/{' . AuthorTable::COL_ID . ':[0-9]+}', function (RouteCollectorProxy $group) {
       $group->get('', [Author::class, 'show']);
       $group->patch('', [Author::class, 'update']);
+      $group->put('', [Author::class, 'update']);
       $group->delete('', [Author::class, 'delete']);
 
       $group->get('/books', [Author::class, 'books']);
@@ -65,6 +68,7 @@ return function (RouteCollectorProxy $group) {
     $group->group('/{' . AuthorTable::COL_AUTHOR_ID . ':[a-zA-Z0-9_-]+}', function (RouteCollectorProxy $group) {
       $group->get('', [Author::class, 'showByAuthorId']);
       $group->patch('', [Author::class, 'updateByAuthorId']);
+      $group->put('', [Author::class, 'updateByAuthorId']);
       $group->delete('', [Author::class, 'deleteByAuthorId']);
 
       $group->get('/books', [Author::class, 'books']);
@@ -79,6 +83,7 @@ return function (RouteCollectorProxy $group) {
     $group->group('/{' . GenreTable::COL_ID . ':[0-9]+}', function (RouteCollectorProxy $group) {
       $group->get('', [Genre::class, 'show']);
       $group->patch('', [Genre::class, 'update']);
+      $group->put('', [Genre::class, 'update']);
       $group->delete('', [Genre::class, 'delete']);
 
       $group->get('/books', [Genre::class, 'books']);
@@ -87,6 +92,7 @@ return function (RouteCollectorProxy $group) {
     $group->group('/{' . GenreTable::COL_GENRE_ID . ':[a-zA-Z0-9_-]+}', function (RouteCollectorProxy $group) {
       $group->get('', [Genre::class, 'showByGenreId']);
       $group->patch('', [Genre::class, 'updateByGenreId']);
+      $group->put('', [Genre::class, 'updateByGenreId']);
       $group->delete('', [Genre::class, 'deleteByGenreId']);
 
       $group->get('/books', [Genre::class, 'books']);
