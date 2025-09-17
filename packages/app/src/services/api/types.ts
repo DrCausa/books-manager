@@ -2,6 +2,8 @@ export interface Book {
   id: string;
   title: string;
   publication_date: string;
+  authors?: Author[];
+  genres?: Genre[];
 }
 
 export interface Author {

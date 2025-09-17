@@ -8,8 +8,8 @@ import type { Author, Genre } from "@/services/api/types";
 
 const AddBookPage = () => {
   const [title, setTitle] = useState("");
-  const [authorId, setAuthorId] = useState("");
-  const [genreId, setGenreId] = useState("");
+  const [authorIds, setAuthorIds] = useState<string[]>([]);
+  const [genreIds, setGenreIds] = useState<string[]>([]);
   const [authors, setAuthors] = useState<Author[]>([]);
   const [genres, setGenres] = useState<Genre[]>([]);
 
@@ -30,7 +30,7 @@ const AddBookPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title || !authorId || !genreId) {
+    if (!title || authorIds.length === 0 || genreIds.length === 0) {
       alert("Por favor completa todos los campos.");
       return;
     }
@@ -41,12 +41,12 @@ const AddBookPage = () => {
         publication_date: new Date().toISOString(),
       });
 
-      await addBookAuthor(bookId, authorId);
-      await addBookGenre(bookId, genreId);
+      await Promise.all(authorIds.map((id) => addBookAuthor(bookId, id)));
+      await Promise.all(genreIds.map((id) => addBookGenre(bookId, id)));
 
       setTitle("");
-      setAuthorId("");
-      setGenreId("");
+      setAuthorIds([]);
+      setGenreIds([]);
       alert("Libro creado exitosamente");
     } catch (error) {
       console.error(error);
@@ -72,12 +72,14 @@ const AddBookPage = () => {
           />
 
           <select
-            value={authorId}
-            onChange={(e) => setAuthorId(e.target.value)}
-            className="border rounded p-2"
+            multiple
+            value={authorIds}
+            onChange={(e) =>
+              setAuthorIds(Array.from(e.target.selectedOptions, (o) => o.value))
+            }
+            className="border rounded p-2 h-32"
             required
           >
-            <option value="">Selecciona un autor...</option>
             {authors.map((a) => (
               <option key={a.id} value={a.id}>
                 {a.name}
@@ -86,12 +88,14 @@ const AddBookPage = () => {
           </select>
 
           <select
-            value={genreId}
-            onChange={(e) => setGenreId(e.target.value)}
-            className="border rounded p-2"
+            multiple
+            value={genreIds}
+            onChange={(e) =>
+              setGenreIds(Array.from(e.target.selectedOptions, (o) => o.value))
+            }
+            className="border rounded p-2 h-32"
             required
           >
-            <option value="">Selecciona un género...</option>
             {genres.map((g) => (
               <option key={g.id} value={g.id}>
                 {g.name}

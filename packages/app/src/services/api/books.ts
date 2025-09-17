@@ -6,7 +6,7 @@ export const getBooks = async (): Promise<Book[]> => {
   return data;
 };
 
-export const getBookById = async (id: string): Promise<Book[]> => {
+export const getBookById = async (id: string): Promise<Book> => {
   const { data } = await api.get(`/books/${id}`);
   return data;
 };
