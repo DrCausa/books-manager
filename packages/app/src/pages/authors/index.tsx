@@ -31,7 +31,12 @@ const AuthorsPage = () => {
       <h2 className="text-3xl font-bold text-gray-800 mb-6">✍️ Autores</h2>
       <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {authors.map((author) => (
-          <li key={author.id}>{author.name}</li>
+          <li
+            key={author.id}
+            className="bg-white shadow p-4 rounded-lg text-center hover:shadow-lg transition"
+          >
+            {author.name}
+          </li>
         ))}
       </ul>
     </div>
