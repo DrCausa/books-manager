@@ -36,11 +36,10 @@ const AddBookPage = () => {
     }
 
     try {
-      const newBookArray = await createBook({
+      const bookId = await createBook({
         title,
         publication_date: new Date().toISOString(),
       });
-      const bookId = newBookArray[0].id;
 
       await addBookAuthor(bookId, authorId);
       await addBookGenre(bookId, genreId);

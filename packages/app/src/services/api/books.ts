@@ -11,9 +11,9 @@ export const getBookById = async (id: string): Promise<Book[]> => {
   return data;
 };
 
-export const createBook = async (book: Omit<Book, "id">): Promise<Book[]> => {
+export const createBook = async (book: Omit<Book, "id">): Promise<string> => {
   const { data } = await api.post("/books", book);
-  return data;
+  return data.id;
 };
 
 export const updateBook = async (
