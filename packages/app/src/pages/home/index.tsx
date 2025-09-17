@@ -1,126 +1,64 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import Card from "@components/common/Card";
-import Icon from "@components/common/Icon";
-import Button from "@components/common/Button";
-import { usePageTitle } from "@hooks/usePageTitle";
-//import styles from "./HomePage.module.css";
+import { Link } from "react-router-dom";
 
-function HomePage() {
-  usePageTitle();
-
-  const [valueA, setValueA] = useState("");
-  const [valueB, setValueB] = useState("");
-  const navigate = useNavigate();
-
-  const handleGoExample = () => {
-    if (valueA.trim() !== "") {
-      navigate(`/example/${valueA}`);
-    } else {
-      navigate("/example");
-    }
-  };
-
-  const handleGoUnified = () => {
-    navigate(`/unified/${valueB}`);
-  };
-
-  const handleForce404 = () => {
-    navigate("/unknown-page-here");
-  };
+const HomePage = () => {
+  const sections = [
+    {
+      id: 1,
+      title: "📚 Libros",
+      description: "Gestiona todos los libros de la biblioteca.",
+      path: "/books",
+      color: "from-indigo-500 to-indigo-700",
+    },
+    {
+      id: 2,
+      title: "👤 Autores",
+      description: "Explora y administra los autores registrados.",
+      path: "/authors",
+      color: "from-green-500 to-green-700",
+    },
+    {
+      id: 3,
+      title: "🎭 Géneros",
+      description: "Organiza los géneros literarios por categorías.",
+      path: "/genres",
+      color: "from-pink-500 to-pink-700",
+    },
+  ];
 
   return (
-    <Card className="mx-auto my-8 w-[24rem]">
-      <h1 className="text-4xl text-center uppercase mb-4 font-semibold">
-        Hello World
+    <div className="p-10 text-center">
+      {/* Título principal */}
+      <h1 className="text-4xl font-extrabold text-gray-800 mb-6">
+        Bienvenido al <span className="text-indigo-600">Gestor de Libros</span> 📖
       </h1>
-      <p className="text-lg mb-4 text-justify">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto eveniet
-        id libero doloremque perspiciatis quos pariatur nam debitis nesciunt
-        quisquam, explicabo repellat distinctio illum suscipit veniam nobis,
-        maiores quis sapiente?
+
+      <p className="text-gray-600 max-w-2xl mx-auto mb-10">
+        Administra tus libros, autores y géneros de manera sencilla y moderna.  
+        Usa el panel de abajo para navegar fácilmente por el sistema.
       </p>
-      <div className="flex items-center gap-4 my-4">
-        <input
-          type="text"
-          name="value"
-          id="value"
-          value={valueA}
-          className="border flex py-2 px-3 focus:outline-none rounded-lg"
-          placeholder="eg. 123"
-          onChange={(e) => setValueA(e.target.value)}
-        />
-        <Button
-          className="border px-3 py-2 rounded-full cursor-pointer w-full"
-          onClick={handleGoExample}
-        >
-          Go example
-        </Button>
+
+      {/* Tarjetas de navegación */}
+      <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
+        {sections.map((section) => (
+          <div
+            key={section.id}
+            className={`rounded-2xl shadow-lg p-6 text-white bg-gradient-to-r ${section.color} cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-2xl`}
+          >
+            <h2 className="text-2xl font-bold mb-2">{section.title}</h2>
+            <p className="mb-4">{section.description}</p>
+            <Link
+              to={section.path}
+              className="inline-block bg-white text-gray-800 px-4 py-2 rounded-lg font-semibold shadow hover:bg-gray-100 transition"
+            >
+              Ir →
+            </Link>
+          </div>
+        ))}
       </div>
-      <div className="flex items-center gap-4 my-4">
-        <input
-          type="text"
-          name="value"
-          id="value"
-          value={valueB}
-          className="border flex py-2 px-3 focus:outline-none rounded-lg"
-          placeholder="eg. 123"
-          onChange={(e) => setValueB(e.target.value)}
-        />
-        <Button
-          className="border px-3 py-2 rounded-full cursor-pointer w-full"
-          onClick={handleGoUnified}
-        >
-          Go unified
-        </Button>
-      </div>
-      <div className="flex items-center gap-4 my-4">
-        <Button
-          className="border px-3 py-2 rounded-full cursor-pointer w-full"
-          onClick={handleForce404}
-        >
-          Force 404 error
-        </Button>
-      </div>
-      <div className="flex w-min mx-auto">
-        <Icon
-          className="!text-6xl bg-black/25 m-2 rounded-full p-3 hover:bg-black/15 hover:text-gray-800"
-          iconName="experiment"
-          iconType="OUTLINED"
-        />
-        <Icon
-          className="!text-6xl bg-black/25 m-2 rounded-full p-3 hover:bg-black/15 hover:text-gray-800"
-          iconName="home"
-          iconType="ROUNDED"
-        />
-        <Icon
-          className="!text-6xl bg-black/25 m-2 rounded-full p-3 hover:bg-black/15 hover:text-gray-800"
-          iconName="engineering"
-          iconType="SHARP"
-        />
-      </div>
-      <div className="flex w-min mx-auto">
-        <Icon
-          className="!text-6xl bg-black/25 m-2 rounded-full p-3 hover:bg-black/15 hover:text-gray-800"
-          iconName="experiment"
-          iconType="OUTLINED"
-          isFilled={true}
-        />
-        <Icon
-          className="!text-6xl bg-black/25 m-2 rounded-full p-3 hover:bg-black/15 hover:text-gray-800"
-          iconName="home"
-          iconType="ROUNDED"
-          isFilled={true}
-        />
-        <Icon
-          className="!text-6xl bg-black/25 m-2 rounded-full p-3 hover:bg-black/15 hover:text-gray-800"
-          iconName="engineering"
-          iconType="SHARP"
-          isFilled={true}
-        />
-      </div>
-    </Card>
+    </div>
   );
-}
+};
 
 export default HomePage;
+
+

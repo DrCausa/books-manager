@@ -1,42 +1,73 @@
 import { createBrowserRouter } from "react-router-dom";
-import App from "@/App";
+import MainLayout from "@components/layout/MainLayout";
+
 import HomePage from "@pages/home";
-import ExampleStatic from "@pages/examples/StaticExample";
-import ExampleDynamic from "@pages/examples/DynamicExample";
-import Unified from "@pages/examples/Unified";
-import NotFoundPage from "@/pages/not-found";
+import BooksPage from "@pages/books";
+import AddBookPage from "@/pages/books/AddBookPage";
+import EditBookPage from "@pages/books/EditBookPage";
+import AuthorsPage from "@pages/authors";
+import GenresPage from "@pages/genres";
+import NotFoundPage from "@pages/not-found";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
-    children: [
-      {
-        index: true,
-        element: <HomePage />,
-      },
-      {
-        path: "example",
-        element: <ExampleStatic />,
-      },
-      {
-        path: "example/:value",
-        element: <ExampleDynamic />,
-      },
-      {
-        path: "unified",
-        element: <Unified />,
-      },
-      {
-        path: "unified/:value",
-        element: <Unified />,
-      },
-    ],
+    element: (
+      <MainLayout>
+        <HomePage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/books",
+    element: (
+      <MainLayout>
+        <BooksPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/books/add",
+    element: (
+      <MainLayout>
+        <AddBookPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/books/:id/edit",
+    element: (
+      <MainLayout>
+        <EditBookPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/authors",
+    element: (
+      <MainLayout>
+        <AuthorsPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/genres",
+    element: (
+      <MainLayout>
+        <GenresPage />
+      </MainLayout>
+    ),
   },
   {
     path: "*",
-    element: <NotFoundPage />,
+    element: (
+      <MainLayout>
+        <NotFoundPage />
+      </MainLayout>
+    ),
   },
 ]);
 
 export default router;
+
+
